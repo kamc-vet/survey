@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KAMC 노령 건강 평가 설문</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:      #1B2E4B;
+  --navy-mid:  #2E4A6B;
+  --navy-lt:   #4A6FA5;
+  --teal:      #0F766E;
+  --teal-lt:   #14B8A6;
+  --gold:      #B45309;
+  --gold-lt:   #F59E0B;
+  --cream:     #F8F6F1;
+  --warm:      #FDFBF7;
+  --text:      #1C2B3A;
+  --muted:     #64748B;
+  --border:    #DDE3EC;
+  --g1: #2563EB; --g1-bg: #EFF6FF;
+  --g2: #16A34A; --g2-bg: #F0FDF4;
+  --g3: #CA8A04; --g3-bg: #FEFCE8;
+  --g4: #EA580C; --g4-bg: #FFF7ED;
+  --g5: #DC2626; --g5-bg: #FEF2F2;
+  --radius: 10px;
+  --shadow: 0 2px 12px rgba(27,46,75,0.09);
+  --shadow-lg: 0 8px 32px rgba(27,46,75,0.14);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  font-family: 'Noto Sans KR', sans-serif;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--navy);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--gold-lt), var(--teal-lt), var(--gold-lt));
+}
+.header-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 24px 36px;
+}
+.header-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #A8C4E0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+.header h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  color: #fff;
+  font-weight: 400;
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+.header p {
+  color: #94B5D4;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* ── PROGRESS ── */
+.progress-bar {
+  background: var(--navy-mid);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.progress-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.progress-label { color: #94B5D4; font-size: 12px; white-space: nowrap; }
+.progress-track {
+  flex: 1;
+  height: 5px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal-lt), var(--gold-lt));
+  border-radius: 3px;
+  width: 0%;
+  transition: width 0.4s ease;
+}
+.progress-score { color: #fff; font-size: 12px; font-weight: 600; white-space: nowrap; }
+
+/* ── MAIN CONTAINER ── */
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 28px 24px 60px;
+}
+
+/* ── INFO SECTION ── */
+.info-card {
+  background: var(--warm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+}
+.info-card h2 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.info-grid .full { grid-column: 1 / -1; }
+.field label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.field label .req { color: #DC2626; margin-left: 2px; }
+.field input, .field select {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 7px;
+  font-size: 13.5px;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: var(--text);
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  -webkit-appearance: none;
+}
+.field input:focus, .field select:focus {
+  border-color: var(--navy-lt);
+  box-shadow: 0 0 0 3px rgba(74,111,165,0.12);
+}
+.field select { cursor: pointer; }
+
+/* ── SECTION CARD ── */
+.section-card {
+  background: var(--warm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  animation: fadeUp 0.35s ease both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(90deg, rgba(27,46,75,0.04), transparent);
+}
+.section-icon {
+  width: 36px; height: 36px;
+  background: var(--navy);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.section-title { flex: 1; }
+.section-title h3 { font-size: 14px; font-weight: 700; color: var(--navy); }
+.section-title p { font-size: 11.5px; color: var(--muted); margin-top: 1px; }
+.section-score {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--navy-lt);
+  background: rgba(74,111,165,0.1);
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* ── QUESTION ── */
+.question {
+  padding: 18px 20px;
+  border-bottom: 1px solid #f1f4f8;
+}
+.question:last-child { border-bottom: none; }
+.q-text {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+.q-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--teal);
+  margin-top: 5px;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.q-dot.on { opacity: 1; }
+.q-hint { font-size: 11.5px; color: var(--muted); margin-bottom: 11px; }
+.options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+}
+.opt {
+  position: relative;
+  padding: 9px 8px 9px 10px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text);
+  background: #fff;
+  transition: all 0.18s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  line-height: 1.35;
+}
+.opt:hover { border-color: var(--navy-lt); background: #f5f8ff; }
+.opt .badge {
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  padding: 1px 5px;
+  border-radius: 10px;
+  background: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+/* Selected states */
+.opt.sel-0 { border-color: var(--g2); background: var(--g2-bg); }
+.opt.sel-0 .badge { background: var(--g2); }
+.opt.sel-1 { border-color: var(--g3); background: var(--g3-bg); }
+.opt.sel-1 .badge { background: var(--g3); }
+.opt.sel-2 { border-color: var(--g5); background: var(--g5-bg); }
+.opt.sel-2 .badge { background: var(--g5); }
+
+/* ── SUBMIT ── */
+.submit-row {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.submit-btn {
+  width: 100%;
+  max-width: 360px;
+  padding: 15px 28px;
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(27,46,75,0.3);
+}
+.submit-btn:hover:not(:disabled) { background: var(--navy-mid); transform: translateY(-1px); box-shadow: 0 6px 18px rgba(27,46,75,0.35); }
+.submit-btn:active:not(:disabled) { transform: translateY(0); }
+.submit-btn:disabled { background: #9BAFC8; cursor: not-allowed; box-shadow: none; }
+.submit-hint { font-size: 12px; color: var(--muted); }
+
+/* ── RESULT PANEL ── */
+.result-panel {
+  display: none;
+  margin-top: 32px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  animation: fadeUp 0.4s ease both;
+}
+.result-panel.show { display: block; }
+
+.result-header {
+  padding: 32px 28px 28px;
+  color: #fff;
+  text-align: center;
+  position: relative;
+}
+.result-header.g1 { background: linear-gradient(135deg, #1E3A8A, #2563EB); }
+.result-header.g2 { background: linear-gradient(135deg, #14532D, #16A34A); }
+.result-header.g3 { background: linear-gradient(135deg, #713F12, #CA8A04); }
+.result-header.g4 { background: linear-gradient(135deg, #7C2D12, #EA580C); }
+.result-header.g5 { background: linear-gradient(135deg, #7F1D1D, #DC2626); }
+
+.result-label { font-size: 11px; opacity: 0.75; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
+.result-score {
+  font-family: 'DM Serif Display', serif;
+  font-size: 64px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.result-score span { font-size: 22px; opacity: 0.6; }
+.result-grade-name { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+.result-grade-kr { font-size: 13px; opacity: 0.8; }
+
+/* Spectrum */
+.result-body {
+  background: var(--warm);
+  border: 1px solid var(--border);
+  border-top: none;
+  padding: 24px 24px 28px;
+}
+.result-section-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.spectrum {
+  margin-bottom: 24px;
+}
+.spectrum-track {
+  display: flex;
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+.spectrum-seg { flex: 1; }
+.spectrum-arrow-row {
+  position: relative;
+  height: 20px;
+}
+.spectrum-arrow {
+  position: absolute;
+  font-size: 14px;
+  transform: translateX(-50%);
+  transition: left 0.6s cubic-bezier(.34,1.56,.64,1);
+  line-height: 1;
+}
+.spectrum-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10.5px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* Domain bars */
+.domain-bars { margin-bottom: 24px; }
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.bar-label { font-size: 12.5px; color: var(--text); width: 90px; flex-shrink: 0; }
+.bar-track {
+  flex: 1;
+  height: 10px;
+  background: #E8EDF5;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 5px;
+  width: 0%;
+  transition: width 0.6s cubic-bezier(.34,1.2,.64,1);
+}
+.bar-val { font-size: 12px; font-weight: 600; color: var(--navy); width: 36px; text-align: right; flex-shrink: 0; }
+
+/* Result note */
+.result-note {
+  background: #F0F4FA;
+  border: 1px solid #D0DAEA;
+  border-left: 4px solid var(--navy-lt);
+  border-radius: 7px;
+  padding: 14px 16px;
+  font-size: 12.5px;
+  color: var(--navy);
+  line-height: 1.65;
+  margin-bottom: 20px;
+}
+
+/* Sheet notice */
+.sheet-notice {
+  display: none;
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  border-left: 4px solid #16A34A;
+  border-radius: 7px;
+  padding: 11px 14px;
+  font-size: 12.5px;
+  color: #166534;
+  margin-bottom: 16px;
+}
+.sheet-error {
+  display: none;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-left: 4px solid #DC2626;
+  border-radius: 7px;
+  padding: 11px 14px;
+  font-size: 12.5px;
+  color: #991B1B;
+  margin-bottom: 16px;
+}
+
+/* Result actions */
+.result-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.btn-print, .btn-reset {
+  flex: 1;
+  min-width: 120px;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.btn-print  { background: var(--navy); color: #fff; }
+.btn-print:hover  { background: var(--navy-mid); }
+.btn-reset  { background: #EEF2F8; color: var(--navy); }
+.btn-reset:hover  { background: #DDE3EC; }
+
+@media (max-width: 560px) {
+  .header h1 { font-size: 22px; }
+  .info-grid  { grid-template-columns: 1fr; }
+  .options    { grid-template-columns: 1fr; }
+  .result-score { font-size: 52px; }
+  .spectrum-labels { font-size: 9.5px; }
+}
+@media print {
+  .progress-bar, .submit-row, .result-actions { display: none !important; }
+  .result-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .bar-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-badge">KAMC 노령동물의학센터</div>
+    <h1>반려견 노령 건강 평가 설문</h1>
+    <p>아래 20가지 항목에 답해주세요. 결과는 담당 수의사에게 자동 전달됩니다.<br>각 항목에 해당하는 것을 솔직하게 선택해 주세요.</p>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-bar">
+  <div class="progress-inner">
+    <span class="progress-label" id="progLabel">0 / 20 완료</span>
+    <div class="progress-track"><div class="progress-fill" id="progFill"></div></div>
+    <span class="progress-score" id="progScore">0 / 40점</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- INFO CARD -->
+  <div class="info-card">
+    <h2>🐾 기본 정보 입력</h2>
+    <div class="info-grid">
+      <div class="field full">
+        <label>보호자 이름 <span class="req">*</span></label>
+        <input type="text" id="ownerName" placeholder="예: 홍길동" autocomplete="name">
+      </div>
+      <div class="field">
+        <label>반려견 이름</label>
+        <input type="text" id="petName" placeholder="예: 초코">
+      </div>
+      <div class="field">
+        <label>나이 (세)</label>
+        <input type="number" id="petAge" placeholder="예: 12" min="0" max="25">
+      </div>
+      <div class="field">
+        <label>체중 (kg)</label>
+        <input type="number" id="petWeight" placeholder="예: 5.2" step="0.1">
+      </div>
+      <div class="field">
+        <label>견종 크기</label>
+        <select id="petSize">
+          <option value="">선택해주세요</option>
+          <option value="소형견">소형견 (10kg 미만)</option>
+          <option value="중형견">중형견 (10~25kg)</option>
+          <option value="대형견">대형견 (25kg 초과)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION A -->
+  <div class="section-card">
+    <div class="section-head">
+      <div class="section-icon">🦮</div>
+      <div class="section-title">
+        <h3>A. 신체적 노쇠</h3>
+        <p>움직임, 체형, 체력 변화를 확인합니다</p>
+      </div>
+      <span class="section-score" id="sA">0 / 10</span>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-a1"></span>최근 6개월 동안 체중 변화가 있었나요?</div>
+      <div class="q-hint">예전 체중과 비교해서 선택해 주세요</div>
+      <div class="options" data-q="a1" data-sec="A">
+        <button class="opt" data-v="0">변화 없음 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">약간 변화 (±5%) <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">10% 이상 감소 <span class="badge">2점</span></button>
+      </div>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-a2"></span>갈비뼈나 척추 뼈가 눈에 띄게 만져지나요?</div>
+      <div class="q-hint">손으로 등이나 옆구리를 만져보세요</div>
+      <div class="options" data-q="a2" data-sec="A">
+        <button class="opt" data-v="0">탄탄하고 정상 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">조금 말라 보임 <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">뼈가 많이 돌출됨 <span class="badge">2점</span></button>
+      </div>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-a3"></span>걸음걸이나 자세에 변화가 있나요?</div>
+      <div class="q-hint">산책하거나 일어설 때 관찰해 주세요</div>
+      <div class="options" data-q="a3" data-sec="A">
+        <button class="opt" data-v="0">자연스럽고 안정적 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">느리거나 불안정 <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">혼자 일어서기 어려움 <span class="badge">2점</span></button>
+      </div>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-a4"></span>계단 오르기 또는 점프를 할 수 있나요?</div>
+      <div class="q-hint">예전과 비교해서 선택해 주세요</div>
+      <div class="options" data-q="a4" data-sec="A">
+        <button class="opt" data-v="0">잘 함 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">예전보다 힘들어함 <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">거의 못 함 <span class="badge">2점</span></button>
+      </div>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-a5"></span>평소 활동량이나 놀이 의욕이 어떤가요?</div>
+      <div class="q-hint">하루 중 움직임의 전반적인 양</div>
+      <div class="options" data-q="a5" data-sec="A">
+        <button class="opt" data-v="0">활기차게 잘 움직임 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">좀 쉬다 다시 활동 <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">대부분 누워서 쉼 <span class="badge">2점</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION B -->
+  <div class="section-card" style="animation-delay:0.05s">
+    <div class="section-head">
+      <div class="section-icon">🧠</div>
+      <div class="section-title">
+        <h3>B. 인지 기능</h3>
+        <p>기억, 수면, 방향감각 변화를 확인합니다</p>
+      </div>
+      <span class="section-score" id="sB">0 / 10</span>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-b1"></span>이름을 부르거나 명령어에 반응하나요?</div>
+      <div class="q-hint">평소 반응과 비교해 주세요</div>
+      <div class="options" data-q="b1" data-sec="B">
+        <button class="opt" data-v="0">즉시 반응함 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">느리거나 가끔 무시 <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">거의 반응 없음 <span class="badge">2점</span></button>
+      </div>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-b2"></span>밤에 잘 자나요?</div>
+      <div class="q-hint">수면 중 이상 행동 여부</div>
+      <div class="options" data-q="b2" data-sec="B">
+        <button class="opt" data-v="0">정상적인 수면 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">가끔 밤에 어수선함 <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">밤에 자주 울거나 배회 <span class="badge">2점</span></button>
+      </div>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-b3"></span>공간 이동이나 방향 찾기를 잘 하나요?</div>
+      <div class="q-hint">좁은 공간에서 빠져나오거나 길 찾기</div>
+      <div class="options" data-q="b3" data-sec="B">
+        <button class="opt" data-v="0">그런 적 없음 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">가끔 그런 모습 보임 <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">자주 헤매거나 갇힘 <span class="badge">2점</span></button>
+      </div>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-b4"></span>가족이나 익숙한 사람을 잘 알아보나요?</div>
+      <div class="q-hint">오래 함께 산 가족에 대한 반응</div>
+      <div class="options" data-q="b4" data-sec="B">
+        <button class="opt" data-v="0">잘 알아봄 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">가끔 낯설어함 <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">자주 낯설거나 무반응 <span class="badge">2점</span></button>
+      </div>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-b5"></span>갑자기 멍하게 있거나 허공을 응시하나요?</div>
+      <div class="q-hint">이유 없이 공간을 바라보는 행동</div>
+      <div class="options" data-q="b5" data-sec="B">
+        <button class="opt" data-v="0">그런 적 없음 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">가끔 있음 <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">자주 있음 <span class="badge">2점</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION C -->
+  <div class="section-card" style="animation-delay:0.10s">
+    <div class="section-head">
+      <div class="section-icon">💊</div>
+      <div class="section-title">
+        <h3>C. 생리적 예비력</h3>
+        <p>장기 기능, 식욕, 회복 능력을 확인합니다</p>
+      </div>
+      <span class="section-score" id="sC">0 / 10</span>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-c1"></span>식욕이나 음식에 대한 관심이 어떤가요?</div>
+      <div class="q-hint">밥그릇 앞에서의 반응</div>
+      <div class="options" data-q="c1" data-sec="C">
+        <button class="opt" data-v="0">잘 먹음 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">예전보다 줄었음 <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">거의 안 먹음 <span class="badge">2점</span></button>
+      </div>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-c2"></span>물을 마시는 양이나 소변량에 변화가 있나요?</div>
+      <div class="q-hint">이전과 비교한 음수량·소변량</div>
+      <div class="options" data-q="c2" data-sec="C">
+        <button class="opt" data-v="0">정상적임 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">약간 변화 있음 <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">눈에 띄게 증가 또는 감소 <span class="badge">2점</span></button>
+      </div>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-c3"></span>구토나 설사가 자주 있나요?</div>
+      <div class="q-hint">최근 한 달 기준</div>
+      <div class="options" data-q="c3" data-sec="C">
+        <button class="opt" data-v="0">거의 없음 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">월 2~3회 정도 <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">주 1회 이상 <span class="badge">2점</span></button>
+      </div>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-c4"></span>숨이 가쁘거나 기침을 하나요?</div>
+      <div class="q-hint">안정 시 또는 가벼운 활동 후</div>
+      <div class="options" data-q="c4" data-sec="C">
+        <button class="opt" data-v="0">전혀 없음 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">가끔 있음 <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">자주 있음 <span class="badge">2점</span></button>
+      </div>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-c5"></span>병원 방문이나 스트레스 후 회복이 어떤가요?</div>
+      <div class="q-hint">예전과 비교해 회복 속도</div>
+      <div class="options" data-q="c5" data-sec="C">
+        <button class="opt" data-v="0">하루 안에 회복 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">2~3일 걸림 <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">일주일 이상 걸림 <span class="badge">2점</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION D -->
+  <div class="section-card" style="animation-delay:0.15s">
+    <div class="section-head">
+      <div class="section-icon">🏥</div>
+      <div class="section-title">
+        <h3>D. 치료 부담 및 통증</h3>
+        <p>현재 약물, 통증, 간병 부담을 확인합니다</p>
+      </div>
+      <span class="section-score" id="sD">0 / 10</span>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-d1"></span>현재 매일 먹는 약이 몇 가지인가요?</div>
+      <div class="q-hint">처방약 및 영양제 모두 포함</div>
+      <div class="options" data-q="d1" data-sec="D">
+        <button class="opt" data-v="0">0~2가지 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">3~4가지 <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">5가지 이상 <span class="badge">2점</span></button>
+      </div>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-d2"></span>통증 징후가 있나요?</div>
+      <div class="q-hint">신음, 만지면 피함, 자세 이상 등</div>
+      <div class="options" data-q="d2" data-sec="D">
+        <button class="opt" data-v="0">없음 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">가끔 있음 <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">지속적으로 있음 <span class="badge">2점</span></button>
+      </div>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-d3"></span>최근 6개월간 입원 또는 수술이 있었나요?</div>
+      <div class="q-hint">당일 시술 포함</div>
+      <div class="options" data-q="d3" data-sec="D">
+        <button class="opt" data-v="0">없었음 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">1회 <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">2회 이상 <span class="badge">2점</span></button>
+      </div>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-d4"></span>배변·배뇨를 혼자 가릴 수 있나요?</div>
+      <div class="q-hint">실내 패드 또는 야외 배변 기준</div>
+      <div class="options" data-q="d4" data-sec="D">
+        <button class="opt" data-v="0">잘 가림 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">가끔 실수 <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">자주 실수 또는 불가 <span class="badge">2점</span></button>
+      </div>
+    </div>
+    <div class="question">
+      <div class="q-text"><span class="q-dot" id="d-d5"></span>일상적인 간병이 얼마나 힘드신가요?</div>
+      <div class="q-hint">보호자로서 느끼는 부담감</div>
+      <div class="options" data-q="d5" data-sec="D">
+        <button class="opt" data-v="0">크게 힘들지 않음 <span class="badge">0점</span></button>
+        <button class="opt" data-v="1">다소 힘듦 <span class="badge">1점</span></button>
+        <button class="opt" data-v="2">매우 힘들고 지침 <span class="badge">2점</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-row">
+    <button class="submit-btn" id="submitBtn" disabled onclick="showResult()">결과 확인하기</button>
+    <p class="submit-hint" id="submitHint">모든 문항에 답변하면 결과를 확인할 수 있습니다 (0/20)</p>
+  </div>
+
+  <!-- RESULT PANEL -->
+  <div class="result-panel" id="resultPanel">
+    <div class="result-header" id="resultHeader">
+      <div class="result-label">KAMC 노령 건강 평가 결과</div>
+      <div class="result-score" id="resultScore">0<span> / 40</span></div>
+      <div class="result-grade-name" id="resultGradeName">-</div>
+      <div class="result-grade-kr" id="resultGradeKr">-</div>
+    </div>
+    <div class="result-body">
+
+      <!-- Spectrum -->
+      <div class="result-section-title">노쇠 단계</div>
+      <div class="spectrum">
+        <div class="spectrum-track">
+          <div class="spectrum-seg" style="flex:7;background:#2563EB"></div>
+          <div class="spectrum-seg" style="flex:8;background:#16A34A"></div>
+          <div class="spectrum-seg" style="flex:8;background:#CA8A04"></div>
+          <div class="spectrum-seg" style="flex:8;background:#EA580C"></div>
+          <div class="spectrum-seg" style="flex:10;background:#DC2626"></div>
+        </div>
+        <div class="spectrum-arrow-row">
+          <span class="spectrum-arrow" id="specArrow" style="left:2%;color:#ccc">▲</span>
+        </div>
+        <div class="spectrum-labels">
+          <span>🔵 Robust</span>
+          <span>🟢 Vulnerable</span>
+          <span>🟡 Pre-frail</span>
+          <span>🟠 Frail</span>
+          <span>🔴 Severe</span>
+        </div>
+      </div>
+
+      <!-- Domain bars -->
+      <div class="result-section-title">영역별 점수</div>
+      <div class="domain-bars" id="domainBars"></div>
+
+      <!-- Notice -->
+      <div class="sheet-notice" id="sheetNotice">✅ 결과가 병원 시스템에 저장되었습니다. 담당 수의사가 확인 후 연락드립니다.</div>
+      <div class="sheet-error" id="sheetError">⚠️ 자동 저장에 실패했습니다. 결과지를 인쇄하여 접수 시 제출해 주세요.</div>
+
+      <!-- Note -->
+      <div class="result-note">
+        📋 <strong>이 결과는 보호자 관찰 기반 선별 평가입니다.</strong><br>
+        정확한 노쇠 단계 진단 및 구체적인 치료·케어 방향은 담당 수의사와 상담 후 결정됩니다.
+      </div>
+
+      <!-- Actions -->
+      <div class="result-actions">
+        <button class="btn-print" onclick="window.print()">🖨 결과지 인쇄</button>
+        <button class="btn-reset" onclick="resetSurvey()">↩ 다시 작성</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ★ 구글 시트 연동 URL 설정
+//   아래 값을 Google Apps Script 웹앱 URL로 교체하세요.
+//   설정 방법: 이 파일 맨 아래 주석 참고
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzfV4aEwCDP5Kn0FadqxgwmyiHzM5nEDgjd3Y1laTDk5zAlsfx6ASDUAHKevf1PCzxnKQ/exec';
+
+// ── 등급 정의 ─────────────────────────────────────────────────────
+const GRADES = [
+  { min:0,  max:6,  id:'g1', color:'#2563EB', en:'Robust',          kr:'건강 노령 관리' },
+  { min:7,  max:14, id:'g2', color:'#16A34A', en:'Early Vulnerable', kr:'예방 개입 시작' },
+  { min:15, max:22, id:'g3', color:'#CA8A04', en:'Pre-frail',        kr:'골든타임 — 적극 개입 필요' },
+  { min:23, max:30, id:'g4', color:'#EA580C', en:'Frail',            kr:'치료 목표 재설정 필요' },
+  { min:31, max:40, id:'g5', color:'#DC2626', en:'Severe',           kr:'완화 중심 케어' },
+];
+const DOMAIN_COLORS = {
+  A: '#2563EB', B: '#7C3AED', C: '#0F766E', D: '#B45309'
+};
+const DOMAIN_LABELS = {
+  A: '신체적 노쇠', B: '인지 기능', C: '생리적 예비력', D: '치료 부담'
+};
+const DOMAIN_KEYS = {
+  A: ['a1','a2','a3','a4','a5'],
+  B: ['b1','b2','b3','b4','b5'],
+  C: ['c1','c2','c3','c4','c5'],
+  D: ['d1','d2','d3','d4','d5'],
+};
+
+const answers = {};
+const TOTAL_Q = 20;
+
+function getGrade(score) {
+  return GRADES.find(g => score >= g.min && score <= g.max);
+}
+
+// ── Progress ───────────────────────────────────────────────────────
+function updateProgress() {
+  const answered = Object.keys(answers).length;
+  const total = Object.values(answers).reduce((a,b)=>a+b, 0);
+
+  document.getElementById('progLabel').textContent = `${answered} / ${TOTAL_Q} 완료`;
+  document.getElementById('progFill').style.width = `${(answered/TOTAL_Q)*100}%`;
+  document.getElementById('progScore').textContent = `${total} / 40점`;
+
+  // Section scores
+  ['A','B','C','D'].forEach(s => {
+    const sec = DOMAIN_KEYS[s].reduce((sum,k)=>sum+(answers[k]||0),0);
+    document.getElementById(`s${s}`).textContent = `${sec} / 10`;
+  });
+
+  // Submit button
+  const btn = document.getElementById('submitBtn');
+  const hint = document.getElementById('submitHint');
+  if (answered === TOTAL_Q) {
+    btn.disabled = false;
+    btn.textContent = '결과 확인하기 ✓';
+    hint.textContent = '모든 항목 완료 — 결과를 확인하세요';
+  } else {
+    btn.disabled = true;
+    btn.textContent = '결과 확인하기';
+    hint.textContent = `모든 문항에 답변하면 결과를 확인할 수 있습니다 (${answered}/${TOTAL_Q})`;
+  }
+}
+
+// ── Option click handler ───────────────────────────────────────────
+document.querySelectorAll('.options').forEach(group => {
+  group.querySelectorAll('.opt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const val = parseInt(btn.dataset.v);
+      const q   = group.dataset.q;
+      answers[q] = val;
+      group.querySelectorAll('.opt').forEach(b => {
+        b.className = 'opt';
+        if (parseInt(b.dataset.v) === val) b.classList.add(`sel-${val}`);
+      });
+      const dot = document.getElementById(`d-${q}`);
+      if (dot) dot.classList.add('on');
+      updateProgress();
+    });
+  });
+});
+
+// ── Google Sheets submit ───────────────────────────────────────────
+async function submitToSheet(payload) {
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') return;
+  try {
+    await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    document.getElementById('sheetNotice').style.display = 'block';
+  } catch (e) {
+    document.getElementById('sheetError').style.display = 'block';
+  }
+}
+
+// ── Show Result ────────────────────────────────────────────────────
+function showResult() {
+  if (Object.keys(answers).length < TOTAL_Q) return;
+
+  const total = Object.values(answers).reduce((a,b)=>a+b, 0);
+  const grade = getGrade(total);
+
+  // Header
+  document.getElementById('resultScore').innerHTML = `${total}<span> / 40</span>`;
+  document.getElementById('resultGradeName').textContent = `${grade.en}`;
+  document.getElementById('resultGradeKr').textContent = grade.kr;
+  const hdr = document.getElementById('resultHeader');
+  hdr.className = `result-header ${grade.id}`;
+
+  // Spectrum arrow
+  const segW = [7,8,8,8,10], totalU = 41;
+  const ranges = [[0,6],[7,14],[15,22],[23,30],[31,40]];
+  let pct = 2;
+  for (let i=0; i<ranges.length; i++) {
+    const [lo,hi] = ranges[i];
+    if (total >= lo && total <= hi) {
+      const start = segW.slice(0,i).reduce((a,b)=>a+b,0) / totalU;
+      const frac  = (total-lo) / (hi-lo+1);
+      pct = (start + (segW[i]/totalU) * (frac + 0.5/(hi-lo+1))) * 100;
+      break;
+    }
+  }
+  setTimeout(() => {
+    const arrow = document.getElementById('specArrow');
+    arrow.style.left  = `${Math.max(2,Math.min(98,pct))}%`;
+    arrow.style.color = grade.color;
+  }, 300);
+
+  // Domain bars
+  const barsEl = document.getElementById('domainBars');
+  barsEl.innerHTML = ['A','B','C','D'].map(s => {
+    const sc  = DOMAIN_KEYS[s].reduce((sum,k)=>sum+(answers[k]||0),0);
+    const pct = (sc/10)*100;
+    return `<div class="bar-row">
+      <span class="bar-label">${DOMAIN_LABELS[s]}</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="background:${DOMAIN_COLORS[s]}" data-target="${pct}"></div>
+      </div>
+      <span class="bar-val">${sc} / 10</span>
+    </div>`;
+  }).join('');
+  setTimeout(() => {
+    document.querySelectorAll('.bar-fill').forEach(el => {
+      el.style.width = el.dataset.target + '%';
+    });
+  }, 150);
+
+  // Show panel
+  const panel = document.getElementById('resultPanel');
+  panel.classList.add('show');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // ── Google Sheets 전송 ─────────────────────────────────────────
+  const now = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  const sA = DOMAIN_KEYS.A.reduce((s,k)=>s+(answers[k]||0),0);
+  const sB = DOMAIN_KEYS.B.reduce((s,k)=>s+(answers[k]||0),0);
+  const sC = DOMAIN_KEYS.C.reduce((s,k)=>s+(answers[k]||0),0);
+  const sD = DOMAIN_KEYS.D.reduce((s,k)=>s+(answers[k]||0),0);
+
+  submitToSheet({
+    date:      `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`,
+    time:      `${pad(now.getHours())}:${pad(now.getMinutes())}`,
+    ownerName: (document.getElementById('ownerName')?.value || '').trim(),
+    petName:   (document.getElementById('petName')?.value   || '').trim(),
+    petAge:    (document.getElementById('petAge')?.value    || '').trim(),
+    petWeight: (document.getElementById('petWeight')?.value || '').trim(),
+    petSize:   (document.getElementById('petSize')?.value   || '').trim(),
+    scoreA: sA, scoreB: sB, scoreC: sC, scoreD: sD,
+    total:  total,
+    grade:  grade.en,
+    gradeKr: grade.kr,
+  });
+}
+
+// ── Reset ──────────────────────────────────────────────────────────
+function resetSurvey() {
+  Object.keys(answers).forEach(k => delete answers[k]);
+  document.querySelectorAll('.opt').forEach(b => b.className = 'opt');
+  document.querySelectorAll('.q-dot').forEach(d => d.classList.remove('on'));
+  document.getElementById('resultPanel').classList.remove('show');
+  document.getElementById('sheetNotice').style.display = 'none';
+  document.getElementById('sheetError').style.display = 'none';
+  const arrow = document.getElementById('specArrow');
+  if (arrow) { arrow.style.left='2%'; arrow.style.color='#ccc'; }
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+updateProgress();
+</script>
+
+<!--
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  구글 시트 자동 저장 설정 가이드
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[1단계] 구글 시트 헤더 준비
+  새 시트를 만들고 1행에 아래 순서로 입력:
+  날짜 | 시간 | 보호자이름 | 반려견이름 | 나이 | 체중 | 크기 |
+  A점수 | B점수 | C점수 | D점수 | 총점 | 등급(영문) | 등급명(한글)
+
+[2단계] Apps Script 설치
+  시트 메뉴 → 확장 프로그램 → Apps Script
+  기존 코드 전체 삭제 후 아래 붙여넣기:
+
+  ┌─────────────────────────────────────────────────────────────┐
+  function doPost(e) {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    const d = JSON.parse(e.postData.contents);
+    sheet.appendRow([
+      d.date, d.time,
+      d.ownerName, d.petName, d.petAge, d.petWeight, d.petSize,
+      d.scoreA, d.scoreB, d.scoreC, d.scoreD,
+      d.total, d.grade, d.gradeKr
+    ]);
+    return ContentService
+      .createTextOutput(JSON.stringify({ result: 'success' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  └─────────────────────────────────────────────────────────────┘
+
+[3단계] 웹앱으로 배포
+  Apps Script 화면 → 배포 → 새 배포
+    유형:        웹 앱
+    실행 계정:   본인 계정
+    액세스 권한: 모든 사용자 (익명 포함)
+  → 배포 → 권한 승인 → 웹앱 URL 복사
+
+[4단계] HTML 파일에 URL 등록
+  이 파일 <script> 내:
+  const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+  → 'YOUR_APPS_SCRIPT_URL_HERE' 를 복사한 URL로 교체
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-->
+</body>
+</html>
